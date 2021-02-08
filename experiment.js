@@ -5,6 +5,7 @@ var participant_id = jsPsych.randomization.randomID(15)
 var date = new Date()
 date = "" + date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds()
 var path = "data/" + date + "_" + participant_id
+var time_start = performance.now()
 
 // record the condition assignment in the jsPsych data
 // this adds a property called 'participant' to every trial
@@ -188,7 +189,9 @@ var end_screen = {
             accuracy + rt +
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
 
-    }
+    },
+    data: { object: 'fixation_cross',
+            experiment_duration: function() { return performance.now() - time_start }}
 }
 
 /* START ================== */
