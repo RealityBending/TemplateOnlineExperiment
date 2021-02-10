@@ -1,3 +1,10 @@
+/* authenticate github using Octokit -- documentation: https://octokit.github.io/rest.js/v18/ */
+import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
+
+const octokit = new Octokit({
+    auth: "474b639d773584c32e2622b469529ce531f0d5e8", // replace this with your own OAuth token
+});
+
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
@@ -108,8 +115,8 @@ var timeline_stimuli = [
 ]
 
 // Create array of images for preload
-list_images = [...timeline_stimuli] // Copy
-for (i in range(timeline_stimuli.length)) {
+var list_images = [...timeline_stimuli] // Copy
+for (var i in range(timeline_stimuli.length)) {
     list_images[i] = timeline_stimuli[i]["stimulus"]
 }
 
@@ -198,6 +205,29 @@ var end_screen = {
             experiment_duration: function() { return performance.now() - time_start }}
 }
 
+/* SAVING DATA FUNCTION ================== */
+
+const REPO_NAME = "TemplateOnlineExperiment";
+const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
+const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
+
+// u can add more constants for author/committer names, etc
+
+function saveToRepo(jsonData, participantId) {
+    // commits a new file in defined repo
+    octokit.repos.createOrUpdateFileContents({
+        owner: REPO_OWNER,
+        repo: REPO_NAME,
+        path: `results/${participantId}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+        message: `Saving results for participant ${participantId}`, // commit message
+        content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
+        "committer.name": REPO_OWNER,
+        "committer.email": AUTHOR_EMAIL,
+        "author.name": REPO_OWNER,
+        "author.email": AUTHOR_EMAIL,
+    });
+}
+
 /* START ================== */
 
 jsPsych.init({
@@ -217,6 +247,13 @@ jsPsych.init({
         // Save data
         // saveData(jsPsych.data.get().filter({ object: 'stimulus' }).csv(), path + "_trials")
         // saveData(jsPsych.data.getInteractionData().csv(), path + "_Interactions")
+
+        // get the participant ID in the first trial result (they're all the same)
+        var participantId = jsPsych.data.get().first(1).values()[0].participant_id;
+        var jsonData = jsPsych.data.get().json(true); // get pretty-printed json of data
+
+        saveToRepo(jsonData, participantId);
+
         // Display data
         jsPsych.data.displayData()
     }
