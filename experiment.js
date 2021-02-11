@@ -4,7 +4,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest"
 
 // Authorize with OAuth token
-const octokit = new Octokit({ auth: "10028f1a2cdd1f1794e4ece3a6dd95a3eb29f5e5" })
+const octokit = new Octokit({ auth: "b4b7fbf3c2d8b7688060e1c871f7121a74d90e11" })
 
 // Commit info
 const REPO_NAME = "TemplateOnlineExperiment"
