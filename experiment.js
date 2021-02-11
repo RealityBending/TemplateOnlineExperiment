@@ -1,3 +1,10 @@
+/* authenticate github using Octokit -- documentation: https://octokit.github.io/rest.js/v18/ */
+import { Octokit } from "https://cdn.skypack.dev/@octokit/rest"
+
+const octokit = new Octokit({
+    auth: "646b7b04af3cd0bf14e2699dc02a8fac94d160b4", // replace this with your own OAuth token
+})
+
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
