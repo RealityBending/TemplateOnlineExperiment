@@ -51,11 +51,13 @@ var information_screen_free = {
 var information_screen_choice = {
     type: 'survey-multi-choice',
     questions: [
-        { prompt: "<p><b>Did you already played this game?</b></p>" +
-                  "<p><i>This is just for us to know if you're a first timer :)</i></p>",
-          name: 'AlreadyPlayed', 
-          options: ["No", "Yes"], 
-          required: true }
+        {
+            prompt: "<p><b>Did you already played this game?</b></p>" +
+                "<p><i>This is just for us to know if you're a first timer :)</i></p>",
+            name: 'AlreadyPlayed',
+            options: ["No", "Yes"],
+            required: true
+        }
     ],
     data: { object: 'information' }
 }
@@ -194,8 +196,10 @@ var end_screen = {
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
 
     },
-    data: { object: 'fixation_cross',
-            experiment_duration: function() { return performance.now() - time_start }}
+    data: {
+        object: 'fixation_cross',
+        experiment_duration: function () { return performance.now() - time_start }
+    }
 }
 
 /* START ================== */
