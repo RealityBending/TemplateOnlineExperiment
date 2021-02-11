@@ -118,6 +118,7 @@ var timeline_stimuli = [
 
 // Create array of images for preload
 var list_images = [...timeline_stimuli] // Copy
+var i = 1
 for (i in range(timeline_stimuli.length)) {
     list_images[i] = timeline_stimuli[i]["stimulus"]
 }
