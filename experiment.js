@@ -2,7 +2,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
 const octokit = new Octokit({
-    auth: "474b639d773584c32e2622b469529ce531f0d5e8", // replace this with your own OAuth token
+    auth: process.env.GH_TOKEN, // replace this with your own OAuth token
 });
 
 /* INFO ================== */
