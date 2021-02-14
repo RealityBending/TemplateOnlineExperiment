@@ -25,7 +25,7 @@ octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
         path: 'results/' + test + '.json', // path in repo -- saves to 'results' folder as '<participant_id>.json'
-        message: `Saving results for participant ${participantId}`, // commit message
+        message: `Saving results for participant ${test}`, // commit message
         content: "fart", // octokit requires base64 encoding for the content; this just encodes the json string
         "committer.name": REPO_OWNER,
         "committer.email": AUTHOR_EMAIL,
