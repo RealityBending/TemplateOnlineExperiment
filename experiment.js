@@ -228,7 +228,7 @@ function saveToRepo(jsonData, participantId) {
     octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
-        path: `results\/${participantId}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+        path: 'results/' + participantId + '.json', // path in repo -- saves to 'results' folder as '<participant_id>.json'
         message: `Saving results for participant ${participantId}`, // commit message
         content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
         "committer.name": REPO_OWNER,
