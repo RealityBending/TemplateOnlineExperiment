@@ -1,6 +1,14 @@
 /* authenticate github using Octokit -- documentation: https://octokit.github.io/rest.js/v18/ */
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
+let authToken;
+
+fetch(".netlify/functions/api")
+.then(response => response.json())
+.then(json => {
+    authToken = json.api;
+})
+
 const octokit = new Octokit({
     auth: process.env.GH_TOKEN, // replace this with your own OAuth token
 });
