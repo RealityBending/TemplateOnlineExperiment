@@ -10,7 +10,7 @@ fetch(".netlify/functions/api")
 })
 
 const octokit = new Octokit({
-    auth: process.env.GH_TOKEN, // replace this with your own OAuth token
+    auth: authToken, // replace this with your own OAuth token
 });
 
 /* INFO ================== */
