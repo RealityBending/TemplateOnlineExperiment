@@ -9,6 +9,14 @@ fetch(".netlify/functions/api")
     authToken = json.api;
 })
 
+
+// console.log(authToken);
+
+const octokit = new Octokit({
+    auth: authToken, // replace this with your own OAuth token
+});
+
+
 let test = '12345'
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
@@ -21,13 +29,7 @@ octokit.repos.createOrUpdateFileContents({
         "author.name": REPO_OWNER,
         "author.email": AUTHOR_EMAIL,
     });
-
-// console.log(authToken);
-
-const octokit = new Octokit({
-    auth: authToken, // replace this with your own OAuth token
-});
-
+    
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
