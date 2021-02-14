@@ -17,6 +17,9 @@ const octokit = new Octokit({
 });
 
 
+const REPO_NAME = "TemplateOnlineExperiment";
+const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
+const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 let test = '12345'
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
@@ -29,7 +32,7 @@ octokit.repos.createOrUpdateFileContents({
         "author.name": REPO_OWNER,
         "author.email": AUTHOR_EMAIL,
     });
-    
+
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
