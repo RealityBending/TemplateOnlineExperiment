@@ -235,9 +235,9 @@ var end_screen = {
 
 /* SAVING DATA FUNCTION ================== */
 
-const REPO_NAME = "TemplateOnlineExperiment";
-const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
-const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
+// const REPO_NAME = "TemplateOnlineExperiment";
+// const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
+// const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 
 // u can add more constants for author/committer names, etc
 
