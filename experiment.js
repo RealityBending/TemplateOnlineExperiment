@@ -18,6 +18,7 @@ let test = '123456'
 
 authenticatedOctokit
     .then(octokit => 
+    console.log('hi');
         octokit.repos.createOrUpdateFileContents({
             owner: REPO_OWNER,
             repo: REPO_NAME,
@@ -30,7 +31,7 @@ authenticatedOctokit
             "author.email": AUTHOR_EMAIL,
         })
     )
-    .catch(err => alert(err))
+    // .catch(err => alert(err))
 
 
 /* INFO ================== */
