@@ -9,7 +9,6 @@ fetch(".netlify/functions/api")
     authToken = json.api;
 })
 
-console.log(octokit.users.getAuthenticated());
 
 const octokit = new Octokit({
     auth: authToken, // replace this with your own OAuth token
@@ -19,6 +18,7 @@ const REPO_NAME = "TemplateOnlineExperiment";
 const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 let test = '12345'
+console.log(octokit.users.getAuthenticated());
 
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
