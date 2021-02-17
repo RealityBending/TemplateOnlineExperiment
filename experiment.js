@@ -9,7 +9,6 @@ fetch(".netlify/functions/api")
     authToken = json.api;
 })
 
-
 // console.log(authToken);
 
 const octokit = new Octokit({
@@ -20,18 +19,24 @@ const REPO_NAME = "TemplateOnlineExperiment";
 const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 let test = '12345'
+
+try {
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
         path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
         message: `Saving results for participant ${test}`, // commit message
-        content: {fart: 'fart'}, // octokit requires base64 encoding for the content; this just encodes the json string
+        content: btoa({fart: 'fart'}), // octokit requires base64 encoding for the content; this just encodes the json string
         "committer.name": REPO_OWNER,
         "committer.email": AUTHOR_EMAIL,
         "author.name": REPO_OWNER,
         "author.email": AUTHOR_EMAIL,
     });
 
+    
+} catch (error) {
+    console.log(error);
+}
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
