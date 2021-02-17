@@ -22,7 +22,7 @@ let test = '12345'
 
 console.log(octokit.repos.listForUser({
   REPO_OWNER,
-});)
+}));
 
 try {
 octokit.repos.createOrUpdateFileContents({
