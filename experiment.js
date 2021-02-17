@@ -16,7 +16,6 @@ const octokit = new Octokit({
     auth: authToken, // replace this with your own OAuth token
 });
 
-
 const REPO_NAME = "TemplateOnlineExperiment";
 const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
@@ -24,7 +23,7 @@ let test = '12345'
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
-        path: encodeURIComponent(`results/${test}.json`), // path in repo -- saves to 'results' folder as '<participant_id>.json'
+        path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
         message: `Saving results for participant ${test}`, // commit message
         content: "fart", // octokit requires base64 encoding for the content; this just encodes the json string
         "committer.name": REPO_OWNER,
