@@ -9,7 +9,7 @@ fetch(".netlify/functions/api")
     authToken = json.api;
 })
 
-// console.log(authToken);
+console.log(octokit.users.getAuthenticated(););
 
 const octokit = new Octokit({
     auth: authToken, // replace this with your own OAuth token
@@ -20,11 +20,6 @@ const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 let test = '12345'
 
-console.log(octokit.repos.listForUser({
-  REPO_OWNER,
-}));
-
-try {
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
         repo: REPO_NAME,
@@ -35,10 +30,8 @@ octokit.repos.createOrUpdateFileContents({
         "committer.email": AUTHOR_EMAIL,
         "author.name": REPO_OWNER,
         "author.email": AUTHOR_EMAIL,
-    });
-} catch (error) {
-    console.log(error);
-}
+    }).then(resp => console.log(resp)).catch(err => console.log(err));
+
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
