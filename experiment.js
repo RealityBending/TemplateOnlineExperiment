@@ -17,8 +17,8 @@ const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author
 let test = '1234567'
 
 authenticatedOctokit
-    .then(octokit => 
-    console.log('hi');
+    .then(octokit => {
+        console.log('hi');
         octokit.repos.createOrUpdateFileContents({
             owner: REPO_OWNER,
             repo: REPO_NAME,
@@ -29,7 +29,7 @@ authenticatedOctokit
             "committer.email": AUTHOR_EMAIL,
             "author.name": REPO_OWNER,
             "author.email": AUTHOR_EMAIL,
-        })
+        })}
     )
     // .catch(err => alert(err))
 
