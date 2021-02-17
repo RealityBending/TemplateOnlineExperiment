@@ -9,7 +9,7 @@ fetch(".netlify/functions/api")
     authToken = json.api;
 })
 
-console.log(octokit.users.getAuthenticated(););
+console.log(octokit.users.getAuthenticated());
 
 const octokit = new Octokit({
     auth: authToken, // replace this with your own OAuth token
