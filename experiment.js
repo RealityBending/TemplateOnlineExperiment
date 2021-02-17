@@ -14,7 +14,7 @@ const authenticatedOctokit =
 const REPO_NAME = "TemplateOnlineExperiment";
 const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
-let test = '123456'
+let test = '1234567'
 
 authenticatedOctokit
     .then(octokit => 
@@ -24,7 +24,7 @@ authenticatedOctokit
             repo: REPO_NAME,
             path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
             message: `Saving results for participant ${test}`, // commit message
-            content: btoa({fart: 'fart'}), // octokit requires base64 encoding for the content; this just encodes the json string
+            content: btoa('fart'), // octokit requires base64 encoding for the content; this just encodes the json string
             "committer.name": REPO_OWNER,
             "committer.email": AUTHOR_EMAIL,
             "author.name": REPO_OWNER,
