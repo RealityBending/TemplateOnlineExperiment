@@ -20,6 +20,10 @@ const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 let test = '12345'
 
+console.log(octokit.repos.listForUser({
+  REPO_OWNER,
+});)
+
 try {
 octokit.repos.createOrUpdateFileContents({
         owner: REPO_OWNER,
@@ -32,8 +36,6 @@ octokit.repos.createOrUpdateFileContents({
         "author.name": REPO_OWNER,
         "author.email": AUTHOR_EMAIL,
     });
-
-    
 } catch (error) {
     console.log(error);
 }
