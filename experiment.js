@@ -1,10 +1,17 @@
 /* SAVING DATA FUNCTION ================== */
 
 // Authenticate github using Octokit (https://octokit.github.io/rest.js/v18/)
-import { Octokit } from "https://cdn.skypack.dev/@octokit/rest"
+import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
-// Authorize with OAuth token
-const octokit = new Octokit({ auth: "b4b7fbf3c2d8b7688060e1c871f7121a74d90e11" })
+// returns Octokit authentication promise
+const authenticatedOctokit = 
+    fetch(".netlify/functions/api") // fetching gh token from netlify server function
+    .then(response => response.json())
+    .then((json) => 
+        new Octokit({
+            auth: json.api, // authenticating Octokit
+        })
+    )
 
 // Commit info
 const REPO_NAME = "TemplateOnlineExperiment"
@@ -13,16 +20,19 @@ const AUTHOR_EMAIL = "dom.makowski@gmail.com" // update this to committer/author
 
 function commitToRepo(jsonData, participantId) {
     // commits a new file in defined repo
-    octokit.repos.createOrUpdateFileContents({
-        owner: REPO_OWNER,
-        repo: REPO_NAME,
-        path: `results/${participantId}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
-        message: `Saving results for participant ${participantId}`, // commit message
-        content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
-        "committer.name": REPO_OWNER,
-        "committer.email": AUTHOR_EMAIL,
-        "author.name": REPO_OWNER,
-        "author.email": AUTHOR_EMAIL,
+    authenticatedOctokit
+    .then(octokit => { // "then" makes sure that this runs *after* octokit is authenticated
+        octokit.repos.createOrUpdateFileContents({
+            owner: REPO_OWNER,
+            repo: REPO_NAME,
+            path: `results/${participantId}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+            message: `Saving results for participant ${participantId}`, // commit message
+            content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
+            "committer.name": REPO_OWNER,
+            "committer.email": AUTHOR_EMAIL,
+            "author.name": REPO_OWNER,
+            "author.email": AUTHOR_EMAIL,
+        })  
     })
 }
 
