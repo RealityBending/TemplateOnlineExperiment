@@ -10,6 +10,31 @@ const authenticatedOctokit =
                 auth: json.api,
             })
         )
+/* SAVING DATA FUNCTION ================== */
+
+// Commit info
+const REPO_NAME = "TemplateOnlineExperiment"
+const REPO_OWNER = "RealityBending" // update this to use "RealityBending"
+const AUTHOR_EMAIL = "dom.makowski@gmail.com" // update this to committer/author email
+
+function commitToRepo(jsonData, participantId) {
+    // commits a new file in defined repo
+    authenticatedOctokit
+    .then(octokit => {
+        octokit.repos.createOrUpdateFileContents({
+        owner: REPO_OWNER,
+        repo: REPO_NAME,
+        path: `results/${participantId}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+        message: `Saving results for participant ${participantId}`, // commit message
+        content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
+        "committer.name": REPO_OWNER,
+        "committer.email": AUTHOR_EMAIL,
+        "author.name": REPO_OWNER,
+        "author.email": AUTHOR_EMAIL,
+    })
+    })
+}
+
 
 /* INFO ================== */
 
@@ -64,11 +89,13 @@ var information_screen_free = {
 var information_screen_choice = {
     type: 'survey-multi-choice',
     questions: [
-        { prompt: "<p><b>Did you already played this game?</b></p>" +
-                  "<p><i>This is just for us to know if you're a first timer :)</i></p>",
-          name: 'AlreadyPlayed', 
-          options: ["No", "Yes"], 
-          required: true }
+        {
+            prompt: "<p><b>Did you already played this game?</b></p>" +
+                "<p><i>This is just for us to know if you're a first timer :)</i></p>",
+            name: 'AlreadyPlayed',
+            options: ["No", "Yes"],
+            required: true
+        }
     ],
     data: { object: 'information' }
 }
@@ -122,7 +149,8 @@ var timeline_stimuli = [
 
 // Create array of images for preload
 var list_images = [...timeline_stimuli] // Copy
-for (var i in range(timeline_stimuli.length)) {
+var i = 1
+for (i in range(timeline_stimuli.length)) {
     list_images[i] = timeline_stimuli[i]["stimulus"]
 }
 
@@ -207,35 +235,10 @@ var end_screen = {
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
 
     },
-    data: { object: 'fixation_cross',
-            experiment_duration: function() { return performance.now() - time_start }}
-}
-
-/* SAVING DATA FUNCTION ================== */
-
-const REPO_NAME = "TemplateOnlineExperiment";
-const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
-const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
-
-// u can add more constants for author/committer names, etc
-
-function saveToRepo(jsonData, participantId) {
-    // commits a new file in defined repo
-    authenticatedOctokit
-        .then(octokit => {
-            octokit.repos.createOrUpdateFileContents({
-            owner: REPO_OWNER,
-            repo: REPO_NAME,
-            path: 'results/' + participantId + '.json', // path in repo -- saves to 'results' folder as '<participant_id>.json'
-            message: `Saving results for participant ${participantId}`, // commit message
-            content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
-            "committer.name": REPO_OWNER,
-            "committer.email": AUTHOR_EMAIL,
-            "author.name": REPO_OWNER,
-            "author.email": AUTHOR_EMAIL,
-            })}
-        )
-        .catch(err => alert(err));
+    data: {
+        object: 'fixation_cross',
+        experiment_duration: function () { return performance.now() - time_start }
+    }
 }
 
 /* START ================== */
@@ -258,13 +261,9 @@ jsPsych.init({
         // saveData(jsPsych.data.get().filter({ object: 'stimulus' }).csv(), path + "_trials")
         // saveData(jsPsych.data.getInteractionData().csv(), path + "_Interactions")
 
-        // get the participant ID in the first trial result (they're all the same)
-        var participantId = jsPsych.data.get().first(1).values()[0].participant_id;
-        var jsonData = jsPsych.data.get().json(true); // get pretty-printed json of data
+        // Send data to GitHub repository
+        commitToRepo(jsPsych.data.get().json(true), participant_id)
 
-        saveToRepo(jsonData, participantId);
-
-        // Display data
         jsPsych.data.displayData()
     }
 })
