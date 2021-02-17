@@ -7,8 +7,8 @@ fetch(".netlify/functions/api")
 .then(response => response.json())
 .then(json => {
     authToken = json.api;
+    console.log('hi', json);
 })
-
 
 const octokit = new Octokit({
     auth: authToken, // replace this with your own OAuth token
@@ -17,20 +17,21 @@ const octokit = new Octokit({
 const REPO_NAME = "TemplateOnlineExperiment";
 const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
 const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
-let test = '12345'
-console.log(octokit.users.getAuthenticated());
+let test = '123455'
+
+octokit.request('GET /user').then(resp => console.log(resp))
 
 octokit.repos.createOrUpdateFileContents({
-        owner: REPO_OWNER,
-        repo: REPO_NAME,
-        path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
-        message: `Saving results for participant ${test}`, // commit message
-        content: btoa({fart: 'fart'}), // octokit requires base64 encoding for the content; this just encodes the json string
-        "committer.name": REPO_OWNER,
-        "committer.email": AUTHOR_EMAIL,
-        "author.name": REPO_OWNER,
-        "author.email": AUTHOR_EMAIL,
-    }).then(resp => console.log(resp)).catch(err => console.log(err));
+    owner: REPO_OWNER,
+    repo: REPO_NAME,
+    path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+    message: `Saving results for participant ${test}`, // commit message
+    content: btoa({fart: 'fart'}), // octokit requires base64 encoding for the content; this just encodes the json string
+    "committer.name": REPO_OWNER,
+    "committer.email": AUTHOR_EMAIL,
+    "author.name": REPO_OWNER,
+    "author.email": AUTHOR_EMAIL,
+}).then(resp => console.log(resp)).catch(err => console.log(err));
 
 /* INFO ================== */
 
