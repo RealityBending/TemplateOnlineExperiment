@@ -11,29 +11,6 @@ const authenticatedOctokit =
             })
         )
 
-const REPO_NAME = "TemplateOnlineExperiment";
-const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
-const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
-let test = '1234567'
-
-authenticatedOctokit
-    .then(octokit => {
-        console.log('hi');
-        octokit.repos.createOrUpdateFileContents({
-            owner: REPO_OWNER,
-            repo: REPO_NAME,
-            path: `${test}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
-            message: `Saving results for participant ${test}`, // commit message
-            content: btoa('fart'), // octokit requires base64 encoding for the content; this just encodes the json string
-            "committer.name": REPO_OWNER,
-            "committer.email": AUTHOR_EMAIL,
-            "author.name": REPO_OWNER,
-            "author.email": AUTHOR_EMAIL,
-        })}
-    )
-    // .catch(err => alert(err))
-
-
 /* INFO ================== */
 
 // generate a random subject ID with 15 characters
@@ -236,25 +213,29 @@ var end_screen = {
 
 /* SAVING DATA FUNCTION ================== */
 
-// const REPO_NAME = "TemplateOnlineExperiment";
-// const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
-// const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
+const REPO_NAME = "TemplateOnlineExperiment";
+const REPO_OWNER = "penguimelia"; // update this to use "RealityBending"
+const AUTHOR_EMAIL = "penguimelia@gmail.com"; // update this to committer/author email
 
 // u can add more constants for author/committer names, etc
 
 function saveToRepo(jsonData, participantId) {
     // commits a new file in defined repo
-    octokit.repos.createOrUpdateFileContents({
-        owner: REPO_OWNER,
-        repo: REPO_NAME,
-        path: 'results/' + participantId + '.json', // path in repo -- saves to 'results' folder as '<participant_id>.json'
-        message: `Saving results for participant ${participantId}`, // commit message
-        content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
-        "committer.name": REPO_OWNER,
-        "committer.email": AUTHOR_EMAIL,
-        "author.name": REPO_OWNER,
-        "author.email": AUTHOR_EMAIL,
-    });
+    authenticatedOctokit
+        .then(octokit => {
+            octokit.repos.createOrUpdateFileContents({
+            owner: REPO_OWNER,
+            repo: REPO_NAME,
+            path: 'results/' + participantId + '.json', // path in repo -- saves to 'results' folder as '<participant_id>.json'
+            message: `Saving results for participant ${participantId}`, // commit message
+            content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
+            "committer.name": REPO_OWNER,
+            "committer.email": AUTHOR_EMAIL,
+            "author.name": REPO_OWNER,
+            "author.email": AUTHOR_EMAIL,
+            })}
+        )
+        .catch(err => alert(err));
 }
 
 /* START ================== */
