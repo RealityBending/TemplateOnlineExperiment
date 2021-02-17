@@ -1,4 +1,6 @@
-/* authenticate github using Octokit -- documentation: https://octokit.github.io/rest.js/v18/ */
+/* SAVING DATA FUNCTION ================== */
+
+// Authenticate github using Octokit (https://octokit.github.io/rest.js/v18/)
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
 // returns Octokit authentication promise
@@ -7,11 +9,9 @@ const authenticatedOctokit =
     .then(response => response.json())
     .then((json) => 
         new Octokit({
-            auth: json.api,
+            auth: json.api, // authenticating Octokit
         })
     )
-
-/* SAVING DATA FUNCTION ================== */
 
 // Commit info
 const REPO_NAME = "TemplateOnlineExperiment"
@@ -21,7 +21,7 @@ const AUTHOR_EMAIL = "dom.makowski@gmail.com" // update this to committer/author
 function commitToRepo(jsonData, participantId) {
     // commits a new file in defined repo
     authenticatedOctokit
-    .then(octokit => {
+    .then(octokit => { // "then" makes sure that this runs *after* octokit is authenticated
         octokit.repos.createOrUpdateFileContents({
             owner: REPO_OWNER,
             repo: REPO_NAME,
