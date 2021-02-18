@@ -40,7 +40,7 @@ function commitToRepo(jsonData, participant_id) {
 /* INFO ================== */
 
 var date = new Date()
-date = "" + date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds()
+date = format_digit(date.getFullYear()) + format_digit(date.getMonth() + 1) + format_digit(date.getDate()) + format_digit(date.getHours()) + format_digit(date.getMinutes()) + format_digit(date.getSeconds())
 var participant_id = date + "_" + jsPsych.randomization.randomID(15)  // generate a random subject ID with 15 characters
 var path = "data/" + participant_id
 var time_start = performance.now()
