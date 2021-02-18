@@ -42,10 +42,11 @@ function commitToRepo(jsonData, participant_id) {
 
 
 
-var date = new Date()
-var timezone = date.getTimezoneOffset()
-date = format_digit(date.getFullYear()) + format_digit(date.getMonth() + 1) + format_digit(date.getDate()) + format_digit(date.getHours()) + format_digit(date.getMinutes()) + format_digit(date.getSeconds())
-var participant_id = date + "_" + jsPsych.randomization.randomID(5)  // generate a random subject ID with 15 characters
+var datetime = new Date()
+var timezone = datetime.getTimezoneOffset()
+var date = format_digit(datetime.getFullYear()) + format_digit(datetime.getMonth() + 1) + format_digit(datetime.getDate())
+var time = format_digit(datetime.getHours()) + format_digit(datetime.getMinutes()) + format_digit(datetime.getSeconds())
+var participant_id = date + "_" + time + "_" + jsPsych.randomization.randomID(5)  // generate a random subject ID with 15 characters
 var path = "data/" + participant_id
 var time_start = performance.now()
 
@@ -53,8 +54,9 @@ var session_info = {
     participant_id: participant_id,
     experiment_version: '0.0.1',
     data_path: path,
-    date: Date(),
-    date_full: date,
+    datetime: datetime,
+    date: date,
+    time: time,
     date_timezone: timezone
 }
 
@@ -63,7 +65,7 @@ var session_info = {
 /* START ================== */
 
 
-
+// Informed consent and session info
 var welcome_screen = {
     type: "html-button-response",
     choices: ["I agree.", "I disagree."],
@@ -79,31 +81,32 @@ var welcome_screen = {
         }
     },
     // Saving of important information like participant's details and system info
-    data: Object.assign({ object: 'welcome_screen' }, session_info, systemInfo())
+    data: Object.assign({ screen: 'session_info' }, session_info, systemInfo())
 }
 
-var information_screen_free = {
+// Participant information
+var participant_info_general = {
     type: 'survey-text',
     questions: [
         { prompt: "Enter your birthday", name: 'Age', placeholder: "example: '13121991' for 13/12/1991" },
         { prompt: "Enter your initials", name: 'Initials', placeholder: "example: 'DM'" }
     ],
-    data: { object: 'information_screen' }
+    data: { screen: 'participant_info_general' }
 }
 
 
-var information_screen_choice = {
+var participant_info_session = {
     type: 'survey-multi-choice',
     questions: [
         {
             prompt: "<p><b>Did you already played this game?</b></p>" +
-                "<p><i>This is just for us to know if you're a first timer :)</i></p>",
+                "<p><i>This is important for us to know to study the effect of repetition :)</i></p>",
             name: 'AlreadyPlayed',
             options: ["No", "Yes"],
             required: true
         }
     ],
-    data: { object: 'information' }
+    data: { screen: 'participant_info_session' }
 }
 
 
@@ -134,11 +137,21 @@ var instructions = {
 // data_stimuli = read_json_from_url('https://raw.githubusercontent.com/DominiqueMakowski/jsPsychTemplate/main/stimuli/stimuli.json')
 // console.log(data_stimuli)
 
+var fixation_cross = {
+    type: 'html-keyboard-response',
+    stimulus: "<div style='font-size:5em'>+</div>",
+    choices: jsPsych.NO_KEYS,
+    trial_duration: function () { return randomInteger(250, 750) },
+    data: { screen: 'fixation_cross' }
+}
+
+
+
 var timeline_stimuli = [
     {
         stimulus: "stimuli/blue.png",
         data: {
-            object: "stimulus",
+            screen: "stimulus",
             correct_key: 'leftarrow',
             correct_button: '<-'
         }
@@ -146,7 +159,7 @@ var timeline_stimuli = [
     {
         stimulus: "stimuli/orange.png",
         data: {
-            object: "stimulus",
+            screen: "stimulus",
             correct_key: 'rightarrow',
             correct_button: '->'
         }
@@ -213,7 +226,7 @@ var questionnaire = {
     type: 'html-slider-response',
     stimulus: '<p><b>Overall, did you find this task easy?</b></p>',
     labels: ['Not at all', 'Absolutely'],
-    data: { object: 'information' }
+    data: { screen: 'information' }
 }
 
 var end_screen = {
@@ -222,7 +235,7 @@ var end_screen = {
     stimulus: function () {
 
         // Debriefing with feedback
-        var trials = jsPsych.data.get().filter({ object: 'stimulus' })
+        var trials = jsPsych.data.get().filter({ screen: 'stimulus' })
         var correct_trials = trials.filter({ correct: true })
 
         var accuracy = "<p style='color:rgb(76,175,80);'>You responded correctly on <b>" +
@@ -242,7 +255,7 @@ var end_screen = {
 
     },
     data: {
-        object: 'fixation_cross',
+        screen: 'fixation_cross',
         experiment_duration: function () { return performance.now() - time_start }
     }
 }
@@ -255,8 +268,8 @@ jsPsych.init({
     message_progress_bar: 'Completion',
     timeline: [
         welcome_screen,
-        information_screen_free,
-        information_screen_choice,
+        participant_info_general,
+        participant_info_session,
         instructions,
         trials,
         questionnaire,
@@ -264,7 +277,7 @@ jsPsych.init({
     ],
     on_finish: function () {
         // Save data
-        // saveData(jsPsych.data.get().filter({ object: 'stimulus' }).csv(), path + "_trials")
+        // saveData(jsPsych.data.get().filter({ screen: 'stimulus' }).csv(), path + "_trials")
         // saveData(jsPsych.data.getInteractionData().csv(), path + "_Interactions")
 
         // Send data to GitHub repository
