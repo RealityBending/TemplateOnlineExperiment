@@ -1,6 +1,6 @@
 on: push
 
-name: Build
+name: Compile data
 
 jobs:
   render:
@@ -9,7 +9,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@v1
-      - run: tlmgr --version
       - name: Install Dependencies
         run: |
             Rscript -e 'install.packages(c("rjson"))'

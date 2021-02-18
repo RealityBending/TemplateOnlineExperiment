@@ -228,9 +228,9 @@ var questionnaire = {
         experiment_duration: function () { return performance.now() - time_start }
     },
     on_finish: function (data) {
-        // Send data to GitHub repository
-        data.interactions = jsPsych.data.getInteractionData().json(true)
-        commitToRepo(jsPsych.data.get().json(true), "data/" + participant_id + ".json")
+        // This should be done at at the last "trial" / phase, before the feedback screen (to prevent quitting before)
+        data.interactions = jsPsych.data.getInteractionData().json(true)  // Add interaction data
+        commitToRepo(jsPsych.data.get().json(true), "data/" + participant_id + ".json")  // Send data to GitHub repository
     }
 }
 
@@ -260,7 +260,7 @@ var end_screen = {
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
     },
     on_finish: function () {
-        jsPsych.endExperiment('The experiment was ended.')
+        jsPsych.endExperiment('The experiment was ended. You can close the window or press refresh it to start again.')
     }
 }
 

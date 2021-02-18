@@ -34,10 +34,36 @@ preprocess_participant_info_session <- function(df) {
 
 preprocess_trial <- function(df) {
   names(df) <- tools::toTitleCase(names(df))
-  df[c("Screen" ,"Internal_node_id", "Time_elapsed", "Trial_index", "Trial_type")] <- NULL
+  df[c("Screen" ,"Internal_node_id", "Time_elapsed", "Trial_type")] <- NULL
   names(df)[names(df) == "Rt"] <- "RT"
   df
 }
+
+preprocess_question <- function(df, index = NULL, label = NULL){
+  if(is.null(label)) {
+    label <- gsub("<.*?>", "", df$stimulus)
+  }
+  if(is.null(index)) {
+    index <- paste0("Q", df$trial_index)
+  }
+  out <- data.frame(Temp = NA)
+  out[paste0(index, "_Label")] <- label
+  out[paste0(index, "_Score")] <- df$response
+  out[paste0(index, "_RT")] <- df$rt
+  out$Temp <- NULL
+  out
+}
+
+preprocess_interactions <- function(x){
+  df <- data.frame()
+  for(event in x){
+    df <- rbind(df, as.data.frame(event))
+  }
+  names(df) <- tools::toTitleCase(names(df))
+  names(df)[names(df) == "Trial"] <- "Trial_index"
+  df
+}
+
 
 # Run the preprocessing ---------------------------------------------------
 
@@ -46,30 +72,39 @@ for(file in list.files(data_path)) {
   # Read JSON
   rawdata <- rjson::fromJSON(file=paste0(data_path, file))
 
+  # Find interactions (not sure hat to do with them for now)
+  for(screen in rawdata){
+    if(!is.null(screen$screen) && screen$screen == "question_difficulty") {
+      interactions <- preprocess_interactions(rjson::fromJSON(screen$interactions))
+    }
+  }
+
   trials <- data.frame()
+  info <- data.frame(Temp = 1)
+
   # Loop through all the "screens" (each screen is recorded as a separate list)
   for(screen in rawdata){
     # print(screen$screen)
     screen <- clean_object(screen)
 
     if(!is.null(screen$screen) && screen$screen == "session_info") {
-      sysinfo <- preprocess_session_info(as.data.frame(screen))
+      info <- cbind(info, preprocess_session_info(as.data.frame(screen)))
     }
     if(!is.null(screen$screen) && screen$screen == "participant_info_general") {
-      ppt_info_general <- preprocess_participant_info_general(as.data.frame(screen))
+      info <- cbind(info, preprocess_participant_info_general(as.data.frame(screen)))
     }
     if(!is.null(screen$screen) && screen$screen == "participant_info_session") {
-      ppt_info_session <- preprocess_participant_info_session(as.data.frame(screen))
+      info <- cbind(info, preprocess_participant_info_session(as.data.frame(screen)))
     }
     if(!is.null(screen$screen) && screen$screen == "stimulus") {
       trials <- rbind(trials, preprocess_trial(as.data.frame(screen)))
     }
-    # if(!is.null(screen$screen) && screen$screen == "question_difficulty") {
-    #   trials <- rbind(trials, preprocess_trial(as.data.frame(screen)))
-    # }
+    if(!is.null(screen$screen) && screen$screen == "question_difficulty") {
+      screen$interactions <- NULL
+      info <- cbind(info, preprocess_question(as.data.frame(screen), index="Q_Difficulty"))
+    }
   }
-
-  info <- cbind(sysinfo, ppt_info_general, ppt_info_session)
+  info$Temp <- NULL
   data <- rbind(data, cbind(trials, info))
 }
 
