@@ -49,7 +49,7 @@ for(file in list.files(data_path)) {
   trials <- data.frame()
   # Loop through all the "screens" (each screen is recorded as a separate list)
   for(screen in rawdata){
-
+    # print(screen$screen)
     screen <- clean_object(screen)
 
     if(!is.null(screen$screen) && screen$screen == "session_info") {
@@ -64,10 +64,13 @@ for(file in list.files(data_path)) {
     if(!is.null(screen$screen) && screen$screen == "stimulus") {
       trials <- rbind(trials, preprocess_trial(as.data.frame(screen)))
     }
+    # if(!is.null(screen$screen) && screen$screen == "question_difficulty") {
+    #   trials <- rbind(trials, preprocess_trial(as.data.frame(screen)))
+    # }
   }
 
   info <- cbind(sysinfo, ppt_info_general, ppt_info_session)
   data <- rbind(data, cbind(trials, info))
 }
 
-write.csv("data.csv", row.names = FALSE)
+write.csv(data, "data.csv", row.names = FALSE)

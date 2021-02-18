@@ -258,7 +258,9 @@ var end_screen = {
         return "<p><b>Thank you for participating!</b> Here are your results:</p><hr>" +
             accuracy + rt +
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
-
+    },
+    on_finish: function () {
+        jsPsych.endExperiment('The experiment was ended.')
     }
 }
 
