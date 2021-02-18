@@ -54,7 +54,8 @@ jsPsych.data.addProperties({
     date: Date()
 })
 
-jsPsych.data.addProperties(systemInfo())
+// Add all the system info to all trials
+// jsPsych.data.addProperties(systemInfo())
 
 /* START ================== */
 
@@ -73,7 +74,8 @@ var welcome_screen = {
         if (data.button_pressed == 1) {
             jsPsych.endExperiment('The experiment was ended.')
         }
-    }
+    },
+    data: Object.assign({ object: 'information' }, systemInfo())  // Add all the system info
 }
 
 var information_screen_free = {
