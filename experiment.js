@@ -42,18 +42,16 @@ function commitToRepo(jsonData, participant_id) {
 
 
 var datetime = new Date()
-var timezone = datetime.getTimezoneOffset()
+var timezone = -1 * (datetime.getTimezoneOffset() / 60)
 var date = format_digit(datetime.getFullYear()) + format_digit(datetime.getMonth() + 1) + format_digit(datetime.getDate())
 var time = format_digit(datetime.getHours()) + format_digit(datetime.getMinutes()) + format_digit(datetime.getSeconds())
 var participant_id = date + "_" + time + "_" + jsPsych.randomization.randomID(5)  // generate a random subject ID with 15 characters
-var path = "data/" + participant_id
 var time_start = performance.now()
 
 var session_info = {
     participant_id: participant_id,
     experiment_version: '0.0.1',
-    data_path: path,
-    datetime: datetime.toString(),
+    datetime: datetime.toLocaleDateString("fr-FR") + " " + datetime.toLocaleTimeString("fr-FR"),
     date: date,
     time: time,
     date_timezone: timezone
@@ -225,8 +223,9 @@ var questionnaire = {
     type: 'html-slider-response',
     stimulus: '<p><b>Overall, did you find this task easy?</b></p>',
     labels: ['Not at all', 'Absolutely'],
-    data: { screen: 'information' }
+    data: { screen: 'question_difficulty' }
 }
+
 
 var end_screen = {
     type: "html-button-response",
@@ -254,7 +253,7 @@ var end_screen = {
 
     },
     data: {
-        screen: 'fixation_cross',
+        screen: 'end_screen',
         experiment_duration: function () { return performance.now() - time_start }
     }
 }
