@@ -18,15 +18,15 @@ const REPO_NAME = "TemplateOnlineExperiment"
 const REPO_OWNER = "RealityBending" // update this to use "RealityBending"
 const AUTHOR_EMAIL = "dom.makowski@gmail.com" // update this to committer/author email
 
-function commitToRepo(jsonData, participant_id) {
+function commitToRepo(jsonData, path) {
     // commits a new file in defined repo
     authenticatedOctokit
         .then(octokit => { // "then" makes sure that this runs *after* octokit is authenticated
             octokit.repos.createOrUpdateFileContents({
                 owner: REPO_OWNER,
                 repo: REPO_NAME,
-                path: `data/${participant_id}.json`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
-                message: `Saving results for participant ${participant_id}`, // commit message
+                path: `${path}`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
+                message: `Saving ${path}`, // commit message
                 content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
                 "committer.name": REPO_OWNER,
                 "committer.email": AUTHOR_EMAIL,
@@ -223,7 +223,15 @@ var questionnaire = {
     type: 'html-slider-response',
     stimulus: '<p><b>Overall, did you find this task easy?</b></p>',
     labels: ['Not at all', 'Absolutely'],
-    data: { screen: 'question_difficulty' }
+    data: {
+        screen: 'question_difficulty',
+        experiment_duration: function () { return performance.now() - time_start }
+    },
+    on_finish: function (data) {
+        // Send data to GitHub repository
+        commitToRepo(jsPsych.data.get().json(true), "data/" + participant_id + ".json")
+        commitToRepo(jsPsych.data.getInteractionData().json(true), "data/" + participant_id + "_interaction.json")
+    }
 }
 
 
@@ -251,10 +259,6 @@ var end_screen = {
             accuracy + rt +
             "<hr><p> Don't hesitate to spread the word and share this experiment, science appreciates :)</p>"
 
-    },
-    data: {
-        screen: 'end_screen',
-        experiment_duration: function () { return performance.now() - time_start }
     }
 }
 
@@ -272,17 +276,10 @@ jsPsych.init({
         trials,
         questionnaire,
         end_screen
-    ],
-    on_finish: function () {
-        // Save data
-        // saveData(jsPsych.data.get().filter({ screen: 'stimulus' }).csv(), path + "_trials")
-        // saveData(jsPsych.data.getInteractionData().csv(), path + "_Interactions")
-
-        // Send data to GitHub repository
-        commitToRepo(jsPsych.data.get().json(true), participant_id)
-
-        jsPsych.data.displayData()
-    }
+    ]
+    // on_finish: function () {
+    //     jsPsych.data.displayData()
+    // }
 })
 
 
