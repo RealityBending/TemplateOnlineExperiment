@@ -229,8 +229,8 @@ var questionnaire = {
     },
     on_finish: function (data) {
         // Send data to GitHub repository
+        data.interactions = jsPsych.data.getInteractionData().json(true)
         commitToRepo(jsPsych.data.get().json(true), "data/" + participant_id + ".json")
-        commitToRepo(jsPsych.data.getInteractionData().json(true), "data/" + participant_id + "_interaction.json")
     }
 }
 
