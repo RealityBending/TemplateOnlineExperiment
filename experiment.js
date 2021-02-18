@@ -41,7 +41,6 @@ function commitToRepo(jsonData, participant_id) {
 
 
 
-
 var datetime = new Date()
 var timezone = datetime.getTimezoneOffset()
 var date = format_digit(datetime.getFullYear()) + format_digit(datetime.getMonth() + 1) + format_digit(datetime.getDate())
@@ -54,7 +53,7 @@ var session_info = {
     participant_id: participant_id,
     experiment_version: '0.0.1',
     data_path: path,
-    datetime: datetime,
+    datetime: datetime.toString(),
     date: date,
     time: time,
     date_timezone: timezone
