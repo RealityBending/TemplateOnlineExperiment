@@ -39,23 +39,26 @@ function commitToRepo(jsonData, participant_id) {
 
 /* INFO ================== */
 
+
+
+
 var date = new Date()
+var timezone = date.getTimezoneOffset()
 date = format_digit(date.getFullYear()) + format_digit(date.getMonth() + 1) + format_digit(date.getDate()) + format_digit(date.getHours()) + format_digit(date.getMinutes()) + format_digit(date.getSeconds())
-var participant_id = date + "_" + jsPsych.randomization.randomID(15)  // generate a random subject ID with 15 characters
+var participant_id = date + "_" + jsPsych.randomization.randomID(5)  // generate a random subject ID with 15 characters
 var path = "data/" + participant_id
 var time_start = performance.now()
 
-// record the condition assignment in the jsPsych data
-// this adds a property called 'participant' to every trial
-jsPsych.data.addProperties({
+var session_info = {
     participant_id: participant_id,
     experiment_version: '0.0.1',
     data_path: path,
-    date: Date()
-})
+    date: Date(),
+    date_full: date,
+    date_timezone: timezone
+}
 
-// Add all the system info to all trials
-// jsPsych.data.addProperties(systemInfo())
+
 
 /* START ================== */
 
@@ -75,7 +78,8 @@ var welcome_screen = {
             jsPsych.endExperiment('The experiment was ended.')
         }
     },
-    data: Object.assign({ object: 'information' }, systemInfo())  // Add all the system info
+    // Saving of important information like participant's details and system info
+    data: Object.assign({ object: 'welcome_screen' }, session_info, systemInfo())
 }
 
 var information_screen_free = {
@@ -84,7 +88,7 @@ var information_screen_free = {
         { prompt: "Enter your birthday", name: 'Age', placeholder: "example: '13121991' for 13/12/1991" },
         { prompt: "Enter your initials", name: 'Initials', placeholder: "example: 'DM'" }
     ],
-    data: { object: 'information' }
+    data: { object: 'information_screen' }
 }
 
 
