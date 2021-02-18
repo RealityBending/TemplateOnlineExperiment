@@ -9,7 +9,7 @@ const authenticatedOctokit =
         .then(response => response.json())
         .then((json) =>
             new Octokit({
-                auth: json.api, // authenticating Octokit
+                auth: json.auth, // authenticating Octokit
             })
         )
 
@@ -39,11 +39,10 @@ function commitToRepo(jsonData, participant_id) {
 
 /* INFO ================== */
 
-// generate a random subject ID with 15 characters
-var participant_id = jsPsych.randomization.randomID(15)
 var date = new Date()
 date = "" + date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds()
-var path = "data/" + date + "_" + participant_id
+var participant_id = date + "_" + jsPsych.randomization.randomID(15)  // generate a random subject ID with 15 characters
+var path = "data/" + participant_id
 var time_start = performance.now()
 
 // record the condition assignment in the jsPsych data
