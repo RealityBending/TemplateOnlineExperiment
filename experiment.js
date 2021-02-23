@@ -150,7 +150,6 @@ var timeline_stimuli = [
         data: {
             screen: "stimulus",
             correct_key: 'arrowleft',
-            correct_button: '<-'
         }
     },
     {
@@ -158,7 +157,6 @@ var timeline_stimuli = [
         data: {
             screen: "stimulus",
             correct_key: 'arrowright',
-            correct_button: '->'
         }
     }
 ]
@@ -185,7 +183,12 @@ var stimulus = {
         data.prestimulus_duration = jsPsych.data.get().last(2).values()[0].time_elapsed - jsPsych.data.get().last(3).values()[0].time_elapsed
         data.trial_number = trial_number
         trial_number += 1
-        data.correct = [data.correct_key, data.correct_button].includes(data.answer) // Correct or not
+        // Score the response as correct or incorrect.
+        if (jsPsych.pluginAPI.compareKeys(data.response, data.correct_key)) {
+            data.correct = true
+        } else {
+            data.correct = false
+        }
         // Quit if echap
         if (data.answer == 'esc') {
             jsPsych.endExperiment('The experiment was ended.')
@@ -278,9 +281,9 @@ jsPsych.init({
         questionnaire,
         end_screen
     ]
-    on_finish: function () {
-         jsPsych.data.displayData()
-    }
+    // on_finish: function () {
+    //     jsPsych.data.displayData()
+    // }
 })
 
 
