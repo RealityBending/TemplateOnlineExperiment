@@ -21,18 +21,22 @@ preprocess_session_info <- function(df) {
 }
 
 preprocess_participant_info_general <- function(df) {
-  out <- as.data.frame(rjson::fromJSON(df$responses))
+  out <- as.data.frame(df$response[1])
+  out <- cbind(out, as.data.frame(df$response[2]))
+  # out <- as.data.frame(rjson::fromJSON(df$responses))
   out$Duration_InfoGeneral <- df$rt
   out
 }
 
 preprocess_participant_info_session <- function(df) {
-  out <- as.data.frame(rjson::fromJSON(df$responses))
+  out <- as.data.frame(df$response[1])
+#  out <- as.data.frame(rjson::fromJSON(df$responses))
   out$Duration_InfoSession <- df$rt
   out
 }
 
 preprocess_trial <- function(df) {
+  df <- df[!stringr::str_detect(names(df), pattern="click_")]  # remove click_x and click_y
   names(df) <- tools::toTitleCase(names(df))
   df[c("Screen" ,"Internal_node_id", "Time_elapsed", "Trial_type")] <- NULL
   names(df)[names(df) == "Rt"] <- "RT"
@@ -68,7 +72,9 @@ preprocess_interactions <- function(x){
 # Run the preprocessing ---------------------------------------------------
 
 # Loop through all the files
-for(file in list.files(data_path)) {
+# for(file in list.files(data_path)) {
+for(file in list.files(data_path)[5:length(list.files(data_path))]) {  # 5th data file marks start of new exp template
+    
   # Read JSON
   rawdata <- rjson::fromJSON(file=paste0(data_path, file))
 
@@ -91,10 +97,10 @@ for(file in list.files(data_path)) {
       info <- cbind(info, preprocess_session_info(as.data.frame(screen)))
     }
     if(!is.null(screen$screen) && screen$screen == "participant_info_general") {
-      info <- cbind(info, preprocess_participant_info_general(as.data.frame(screen)))
+      info <- cbind(info, preprocess_participant_info_general(screen))
     }
     if(!is.null(screen$screen) && screen$screen == "participant_info_session") {
-      info <- cbind(info, preprocess_participant_info_session(as.data.frame(screen)))
+      info <- cbind(info, preprocess_participant_info_session(screen))
     }
     if(!is.null(screen$screen) && screen$screen == "stimulus") {
       trials <- rbind(trials, preprocess_trial(as.data.frame(screen)))
