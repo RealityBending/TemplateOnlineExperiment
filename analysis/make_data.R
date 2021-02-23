@@ -71,7 +71,8 @@ preprocess_interactions <- function(x){
 
 # Loop through all the files
 # for(file in list.files(data_path)) {
-for(file in list.files(data_path)[5:length(list.files(data_path))]) {  # 5th data file marks start of new exp template
+for(file in list.files(data_path)[5:length(list.files(data_path))]) {
+  # 5th data file marks start of new exp template
     
   # Read JSON
   rawdata <- rjson::fromJSON(file=paste0(data_path, file))
