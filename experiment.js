@@ -149,7 +149,7 @@ var timeline_stimuli = [
         stimulus: "stimuli/blue.png",
         data: {
             screen: "stimulus",
-            correct_key: 'leftarrow',
+            correct_key: 'arrowleft',
             correct_button: '<-'
         }
     },
@@ -157,7 +157,7 @@ var timeline_stimuli = [
         stimulus: "stimuli/orange.png",
         data: {
             screen: "stimulus",
-            correct_key: 'rightarrow',
+            correct_key: 'arrowright',
             correct_button: '->'
         }
     }
@@ -175,12 +175,11 @@ for (i in range(timeline_stimuli.length)) {
 var trial_number = 1
 
 var stimulus = {
-    type: "image-buttonkeyboard-response",
+    type: "image-keyboardmouse-response",
     stimulus: jsPsych.timelineVariable('stimulus'),  // Use the 'stimulus' value from the timeline
-    choices: ['<-', '->'],  // Allowed inputs
+    choices: ['arrowleft', 'arrowright', 'esc'], // keyboard choices
     // margin_horizontal: '2em',  // Separation between buttons
     // button_html: ['<button class="jspsych-btn" style = "position:absolute; bottom: 1em, font-size: 3em">%choice%</button>', '<button class="jspsych-btn" style = "position:absolute; bottom: 1em, font-size: 3em">%choice%</button>'],
-    keys: ['leftarrow', 'rightarrow', 'esc'],  // Allowed inputs
     data: jsPsych.timelineVariable('data'), // Add the 'data' dict to the data of that trial
     on_finish: function (data) {
         data.prestimulus_duration = jsPsych.data.get().last(2).values()[0].time_elapsed - jsPsych.data.get().last(3).values()[0].time_elapsed
@@ -279,9 +278,9 @@ jsPsych.init({
         questionnaire,
         end_screen
     ]
-    // on_finish: function () {
-    //     jsPsych.data.displayData()
-    // }
+    on_finish: function () {
+         jsPsych.data.displayData()
+    }
 })
 
 
