@@ -112,16 +112,16 @@ var instructions = {
     choices: ["Let's start!"],
     stimulus: "\
     <p>In this experiment, a circle will appear in the center of the screen.</p> \
-    <p>If the circle is <strong>blue</strong>, press the letter B on the keyboard as fast as you can.</p> \
-    <p>If the circle is <strong>orange</strong>, press the letter O as fast as you can.</p> \
+    <p>If the circle is <strong>blue</strong>, press the left arrow key on the keyboard as fast as you can.</p> \
+    <p>If the circle is <strong>orange</strong>, press the right arrow key as fast as you can.</p> \
     <div style='width: 100%;'> \
         <div style='float: left;'> \
             <img src='img/blue.png'></img> \
-            <p class='small'><strong>Press the <- key</strong></p> \
+            <p class='small'><strong>Press the left arrow key</strong></p> \
         </div> \
         <div class='float: right;'> \
             <img src='img/orange.png'></img> \
-            <p class='small'><strong>Press the -> key</strong></p> \
+            <p class='small'><strong>Press the right arrow key</strong></p> \
         </div> \
     </div> \
     <br><p>Are you ready?</p>"
@@ -184,10 +184,24 @@ var stimulus = {
         data.trial_number = trial_number
         trial_number += 1
         // Score the response as correct or incorrect.
-        if (jsPsych.pluginAPI.compareKeys(data.response, data.correct_key)) {
-            data.correct = true
+        if (data.response != -1) {
+            if (jsPsych.pluginAPI.compareKeys(data.response, data.correct_key)) {
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
         } else {
-            data.correct = false
+            // code mouse clicks as correct or wrong (not in the instructions, but putting this here to remember for later)
+            if (data.click_x < 150) { 
+                data.response = 'arrowleft' // code response as left arrow key if left part of image is clicked
+            } else {
+                data.response = 'arrowright' // code response as right arrow key if right part of image is clicked
+            }
+            if (jsPsych.pluginAPI.compareKeys(data.response, data.correct_key)) {
+                data.correct = true;
+            } else {
+                data.correct = false;
+            }
         }
         // Quit if echap
         if (data.answer == 'esc') {
