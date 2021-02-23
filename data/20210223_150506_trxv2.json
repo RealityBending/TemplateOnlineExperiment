@@ -1,0 +1,222 @@
+[
+	{
+		"rt": 1733.0000000000005,
+		"stimulus": "    <p><b>Welcome to the experiment! Please read the information below.</b></p>     <hr>     <p><i>Here are the terms and conditions. Blabla something something.</i><p>     <p><i>Another paragraph blabla something else.</i><p>",
+		"response": 0,
+		"screen": "session_info",
+		"participant_id": "20210223_150506_trxv2",
+		"experiment_version": "0.0.1",
+		"datetime": "23/02/2021 15:05:06",
+		"date": "20210223",
+		"time": "150506",
+		"date_timezone": 8,
+		"window_width": 980,
+		"window_height": 1693,
+		"window_resolution": "980x1693",
+		"screen_width": 414,
+		"screen_height": 896,
+		"screen_resolution": "414x896",
+		"screen_colordepth": 32,
+		"screen_pixeldepth": 32,
+		"screen_touchscreen": true,
+		"browser_name": "Netscape",
+		"browser_codename": "Mozilla",
+		"browser_engine": "Gecko",
+		"browser_version": "5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+		"browser": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0.3 Mobile/15E148 Safari/604.1",
+		"system_platform": "iPhone",
+		"system_language": "en-sg",
+		"trial_type": "html-button-response",
+		"trial_index": 0,
+		"time_elapsed": 1753,
+		"internal_node_id": "0.0-0.0"
+	},
+	{
+		"rt": 2379,
+		"response": {
+			"Age": "",
+			"Initials": ""
+		},
+		"screen": "participant_info_general",
+		"trial_type": "survey-text",
+		"trial_index": 1,
+		"time_elapsed": 4196,
+		"internal_node_id": "0.0-1.0"
+	},
+	{
+		"rt": 2678.999999999999,
+		"response": {
+			"AlreadyPlayed": "No"
+		},
+		"question_order": [
+			0
+		],
+		"screen": "participant_info_session",
+		"trial_type": "survey-multi-choice",
+		"trial_index": 2,
+		"time_elapsed": 6883,
+		"internal_node_id": "0.0-2.0"
+	},
+	{
+		"rt": 1897.0000000000018,
+		"stimulus": "    <p>In this experiment, a circle will appear in the center of the screen.</p>     <p>If the circle is <strong>blue</strong>, press the letter B on the keyboard as fast as you can.</p>     <p>If the circle is <strong>orange</strong>, press the letter O as fast as you can.</p>     <div style='width: 100%;'>         <div style='float: left;'>             <img src='img/blue.png'></img>             <p class='small'><strong>Press the <- key</strong></p>         </div>         <div class='float: right;'>             <img src='img/orange.png'></img>             <p class='small'><strong>Press the -> key</strong></p>         </div>     </div>     <br><p>Are you ready?</p>",
+		"response": 0,
+		"trial_type": "html-button-response",
+		"trial_index": 3,
+		"time_elapsed": 8788,
+		"internal_node_id": "0.0-3.0"
+	},
+	{
+		"rt": null,
+		"stimulus": "<div style='font-size:5em'>+</div>",
+		"response": null,
+		"screen": "fixation_cross",
+		"trial_type": "html-keyboard-response",
+		"trial_index": 4,
+		"time_elapsed": 9461,
+		"internal_node_id": "0.0-4.0-0.0"
+	},
+	{
+		"rt": 1077.9999999999982,
+		"stimulus": "stimuli/orange.png",
+		"response": -1,
+		"click_x": 212,
+		"click_y": 213,
+		"screen": "stimulus",
+		"correct_key": "arrowright",
+		"trial_type": "image-keyboardmouse-response",
+		"trial_index": 5,
+		"time_elapsed": 10555,
+		"internal_node_id": "0.0-4.0-1.0",
+		"prestimulus_duration": 673,
+		"trial_number": 1,
+		"correct": false
+	},
+	{
+		"rt": null,
+		"stimulus": "<p style='color:red; font-size:2em'><b>Wrong.</b></p><p>RT: 1078.00 ms</p>",
+		"response": null,
+		"trial_type": "html-keyboard-response",
+		"trial_index": 6,
+		"time_elapsed": 11060,
+		"internal_node_id": "0.0-4.0-2.0"
+	},
+	{
+		"rt": null,
+		"stimulus": "<div style='font-size:5em'>+</div>",
+		"response": null,
+		"screen": "fixation_cross",
+		"trial_type": "html-keyboard-response",
+		"trial_index": 7,
+		"time_elapsed": 11784,
+		"internal_node_id": "0.0-4.0-0.1"
+	},
+	{
+		"rt": 1451.0000000000018,
+		"stimulus": "stimuli/blue.png",
+		"response": -1,
+		"click_x": 202,
+		"click_y": 170,
+		"screen": "stimulus",
+		"correct_key": "arrowleft",
+		"trial_type": "image-keyboardmouse-response",
+		"trial_index": 8,
+		"time_elapsed": 13240,
+		"internal_node_id": "0.0-4.0-1.1",
+		"prestimulus_duration": 724,
+		"trial_number": 2,
+		"correct": false
+	},
+	{
+		"rt": null,
+		"stimulus": "<p style='color:red; font-size:2em'><b>Wrong.</b></p><p>RT: 1451.00 ms</p>",
+		"response": null,
+		"trial_type": "html-keyboard-response",
+		"trial_index": 9,
+		"time_elapsed": 13743,
+		"internal_node_id": "0.0-4.0-2.1"
+	},
+	{
+		"rt": null,
+		"stimulus": "<div style='font-size:5em'>+</div>",
+		"response": null,
+		"screen": "fixation_cross",
+		"trial_type": "html-keyboard-response",
+		"trial_index": 10,
+		"time_elapsed": 14058,
+		"internal_node_id": "0.0-4.0-0.2"
+	},
+	{
+		"rt": 4735.999999999998,
+		"stimulus": "stimuli/blue.png",
+		"response": -1,
+		"click_x": 100,
+		"click_y": 189,
+		"screen": "stimulus",
+		"correct_key": "arrowleft",
+		"trial_type": "image-keyboardmouse-response",
+		"trial_index": 11,
+		"time_elapsed": 18824,
+		"internal_node_id": "0.0-4.0-1.2",
+		"prestimulus_duration": 315,
+		"trial_number": 3,
+		"correct": false
+	},
+	{
+		"rt": null,
+		"stimulus": "<p style='color:red; font-size:2em'><b>Wrong.</b></p><p>RT: 4736.00 ms</p>",
+		"response": null,
+		"trial_type": "html-keyboard-response",
+		"trial_index": 12,
+		"time_elapsed": 19341,
+		"internal_node_id": "0.0-4.0-2.2"
+	},
+	{
+		"rt": null,
+		"stimulus": "<div style='font-size:5em'>+</div>",
+		"response": null,
+		"screen": "fixation_cross",
+		"trial_type": "html-keyboard-response",
+		"trial_index": 13,
+		"time_elapsed": 19954,
+		"internal_node_id": "0.0-4.0-0.3"
+	},
+	{
+		"rt": 762,
+		"stimulus": "stimuli/orange.png",
+		"response": -1,
+		"click_x": 97,
+		"click_y": 175,
+		"screen": "stimulus",
+		"correct_key": "arrowright",
+		"trial_type": "image-keyboardmouse-response",
+		"trial_index": 14,
+		"time_elapsed": 20719,
+		"internal_node_id": "0.0-4.0-1.3",
+		"prestimulus_duration": 613,
+		"trial_number": 4,
+		"correct": false
+	},
+	{
+		"rt": null,
+		"stimulus": "<p style='color:red; font-size:2em'><b>Wrong.</b></p><p>RT: 762.00 ms</p>",
+		"response": null,
+		"trial_type": "html-keyboard-response",
+		"trial_index": 15,
+		"time_elapsed": 21223,
+		"internal_node_id": "0.0-4.0-2.3"
+	},
+	{
+		"rt": 1023.0000000000036,
+		"stimulus": "<p><b>Overall, did you find this task easy?</b></p>",
+		"slider_start": 50,
+		"response": 50,
+		"screen": "question_difficulty",
+		"experiment_duration": 21245,
+		"trial_type": "html-slider-response",
+		"trial_index": 16,
+		"time_elapsed": 22267,
+		"internal_node_id": "0.0-5.0",
+		"interactions": "[]"
+	}
+]
