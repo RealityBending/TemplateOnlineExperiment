@@ -23,14 +23,12 @@ preprocess_session_info <- function(df) {
 preprocess_participant_info_general <- function(df) {
   out <- as.data.frame(df$response[1])
   out <- cbind(out, as.data.frame(df$response[2]))
-  # out <- as.data.frame(rjson::fromJSON(df$responses))
   out$Duration_InfoGeneral <- df$rt
   out
 }
 
 preprocess_participant_info_session <- function(df) {
   out <- as.data.frame(df$response[1])
-#  out <- as.data.frame(rjson::fromJSON(df$responses))
   out$Duration_InfoSession <- df$rt
   out
 }
