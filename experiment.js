@@ -28,10 +28,14 @@ function commitToRepo(jsonData, path) {
                 path: `${path}`, // path in repo -- saves to 'results' folder as '<participant_id>.json'
                 message: `Saving ${path}`, // commit message
                 content: btoa(jsonData), // octokit requires base64 encoding for the content; this just encodes the json string
-                "committer.name": REPO_OWNER,
-                "committer.email": AUTHOR_EMAIL,
-                "author.name": REPO_OWNER,
-                "author.email": "phamttam17@gmail.com",
+                committer: {
+                     name: "REBEL",
+                     email: "",
+                },
+                author: {
+                    name: "REBEL",
+                    email: "",
+                }
             })
         })
 }
