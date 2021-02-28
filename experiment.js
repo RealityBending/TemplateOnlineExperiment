@@ -16,7 +16,7 @@ const authenticatedOctokit =
 // Commit info
 const REPO_NAME = "TemplateOnlineExperiment"
 const REPO_OWNER = "RealityBending" // update this to use "RealityBending"
-const AUTHOR_EMAIL = "dom.makowski@gmail.com" // update this to committer/author email
+const AUTHOR_EMAIL = "phamttam17@gmail.com" // update this to committer/author email
 
 function commitToRepo(jsonData, path) {
     // commits a new file in defined repo
@@ -31,7 +31,7 @@ function commitToRepo(jsonData, path) {
                 "committer.name": REPO_OWNER,
                 "committer.email": AUTHOR_EMAIL,
                 "author.name": REPO_OWNER,
-                "author.email": AUTHOR_EMAIL,
+                "author.email": "hungpham2511@gmail.com",
             })
         })
 }
