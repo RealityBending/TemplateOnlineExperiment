@@ -1,7 +1,7 @@
 //upload data
 //authenticate with octokit
 
-import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
+const { Octokit } = require("@octokit/rest");
 
 exports.handler = async (event, context) => {
     const octokit = new Octokit({
