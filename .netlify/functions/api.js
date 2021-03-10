@@ -13,7 +13,7 @@ exports.handler = async (event, context) => {
     console.log(content)
     // authenticating with Octokit
     const octokit = new Octokit({
-        auth: process.env.GH_OAUTH
+        auth: process.env.GH_TOKEN
     })
 
     // send request to update file content
