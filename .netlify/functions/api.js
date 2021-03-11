@@ -5,7 +5,7 @@ const { Octokit } = require("@octokit/rest");
 // Commit info
 const REPO_NAME = "TemplateOnlineExperiment"
 const REPO_OWNER = "RealityBending" // update this to use "RealityBending"
-const AUTHOR_EMAIL = "phamttam17@gmail.com" // update this to committer/author email
+//const AUTHOR_EMAIL = "phamttam17@gmail.com" // update this to committer/author email
 
 exports.handler = async (event, context) => {
     // content should be a dictionary with two attributes: 'path' and 'data'
@@ -25,11 +25,11 @@ exports.handler = async (event, context) => {
         path: content.path,
         committer: {
             name: "REBEL",
-            email: "dupa@gmail.com",
+            email: "realitybendinglab@gmail.com",
         },
         author: {
             name: "REBEL",
-            email: AUTHOR_EMAIL,
+            email: "realitybendinglab@gmail.com",
         }
     })
     if (response.status == 200 || response.status == 201) {
