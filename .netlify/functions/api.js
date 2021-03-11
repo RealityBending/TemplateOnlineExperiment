@@ -24,7 +24,8 @@ exports.handler = async (event, context) => {
         message: `Saving ${content.path}`,
         path: content.path,
         committer: {
-            name: "REBEL"
+            name: "REBEL",
+            email: AUTHOR_EMAIL,
         },
         author: {
             name: "REBEL",
