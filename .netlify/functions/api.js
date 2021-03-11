@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
         path: content.path,
         committer: {
             name: "REBEL",
-            email: AUTHOR_EMAIL,
+            email: "dupa@gmail.com",
         },
         author: {
             name: "REBEL",
